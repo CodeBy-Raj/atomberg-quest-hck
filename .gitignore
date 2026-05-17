@@ -40,7 +40,7 @@ next-env.d.ts
 .genkit/*
 .env*
 .docs*
-.aiexclude*
+
 
 
 
@@ -51,4 +51,3 @@ firestore-debug.log
 docs/blueprint.md
 docs/demo-script.md
 docs/submission.md
-src/ai/flows/ai-milestone-suggestion.ts
