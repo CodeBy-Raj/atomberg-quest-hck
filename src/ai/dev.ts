@@ -1,4 +1,4 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/ai-milestone-suggestion.ts';
+import '@/ai/flows/ai-milestone-suggestion';

@@ -1,7 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { suggestMilestones, SuggestMilestoneOutput } from "../ai/flows/ai-milestone-suggestion"
+import { suggestMilestones } from "@/ai/flows/ai-milestone-suggestion"
+import type { SuggestMilestoneOutput } from "@/ai/flows/ai-milestone-suggestion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
