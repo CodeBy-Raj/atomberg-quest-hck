@@ -1,0 +1,139 @@
+
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role and reporting structure",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["EMPLOYEE", "MANAGER", "ADMIN"] },
+        "managerId": { "type": "string" },
+        "department": { "type": "string" },
+        "photoUrl": { "type": "string" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "ThrustArea": {
+      "title": "Thrust Area",
+      "description": "Organizational focus areas",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "Cycle": {
+      "title": "Cycle",
+      "description": "Performance cycle (e.g. FY 2025-26)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "startDate": { "type": "string", "format": "date-time" },
+        "isActive": { "type": "boolean" },
+        "windows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "quarter": { "type": "string", "enum": ["GOAL_SETTING", "Q1", "Q2", "Q3", "Q4_ANNUAL"] },
+              "opensAt": { "type": "string", "format": "date-time" },
+              "closesAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      },
+      "required": ["id", "name", "isActive"]
+    },
+    "Goal": {
+      "title": "Goal",
+      "description": "Individual or team goals",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "cycleId": { "type": "string" },
+        "thrustAreaId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "uomType": { "type": "string", "enum": ["NUMERIC_MIN", "NUMERIC_MAX", "PERCENT_MIN", "PERCENT_MAX", "TIMELINE", "ZERO"] },
+        "target": { "type": "string" },
+        "weightage": { "type": "number" },
+        "status": { "type": "string", "enum": ["DRAFT", "SUBMITTED", "APPROVED", "RETURNED", "LOCKED"] },
+        "isShared": { "type": "boolean" },
+        "parentGoalId": { "type": "string" },
+        "lockedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "returnComment": { "type": "string" }
+      },
+      "required": ["ownerId", "cycleId", "thrustAreaId", "title", "status"]
+    },
+    "CheckIn": {
+      "title": "Check In",
+      "description": "Quarterly goal progress check-in",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "goalId": { "type": "string" },
+        "quarter": { "type": "string", "enum": ["Q1", "Q2", "Q3", "Q4_ANNUAL"] },
+        "actual": { "type": "string" },
+        "progressStatus": { "type": "string", "enum": ["NOT_STARTED", "ON_TRACK", "COMPLETED"] },
+        "computedScore": { "type": "number" },
+        "managerComment": { "type": "string" },
+        "employeeUpdatedAt": { "type": "string", "format": "date-time" },
+        "managerReviewedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["goalId", "quarter", "progressStatus"]
+    },
+    "AuditLog": {
+      "title": "Audit Log",
+      "description": "Record of changes to entities",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "entity": { "type": "string" },
+        "entityId": { "type": "string" },
+        "actorId": { "type": "string" },
+        "action": { "type": "string" },
+        "before": { "type": "object" },
+        "after": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["entity", "entityId", "actorId", "action", "createdAt"]
+    }
+  },
+  "auth": {
+    "providers": ["email", "google"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile collection"
+    },
+    "/thrustAreas/{areaId}": {
+      "schema": { "$ref": "#/entities/ThrustArea" },
+      "description": "Global thrust areas"
+    },
+    "/cycles/{cycleId}": {
+      "schema": { "$ref": "#/entities/Cycle" },
+      "description": "Performance cycles"
+    },
+    "/goals/{goalId}": {
+      "schema": { "$ref": "#/entities/Goal" },
+      "description": "Goals collection"
+    },
+    "/checkIns/{checkInId}": {
+      "schema": { "$ref": "#/entities/CheckIn" },
+      "description": "Goal check-ins"
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "System audit logs"
+    }
+  }
+}

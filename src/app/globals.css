@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 144 100% 11%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 84 81% 44%;
+    --accent-foreground: 84 100% 11%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142 71% 45%;
+    --chart-1: 142 71% 45%;
+    --chart-2: 84 81% 44%;
+    --chart-3: 160 60% 45%;
+    --chart-4: 30 80% 55%;
+    --chart-5: 280 65% 60%;
+    --radius: 0.75rem;
+    --sidebar-background: 240 10% 3.9%;
+    --sidebar-foreground: 240 5% 64.9%;
+    --sidebar-primary: 142 71% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 142 71% 45%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 142 71% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    background-image: radial-gradient(at 0% 0%, hsla(142, 71%, 45%, 0.05) 0, transparent 50%),
+                      radial-gradient(at 100% 0%, hsla(84, 81%, 44%, 0.05) 0, transparent 50%);
+  }
+}
+
+.glass {
+  @apply bg-background/60 backdrop-blur-md border border-white/5;
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 20px hsla(142, 71%, 45%, 0.2);
+}
+
+.lime-glow {
+  box-shadow: 0 0 15px hsla(84, 81%, 44%, 0.3);
+}
