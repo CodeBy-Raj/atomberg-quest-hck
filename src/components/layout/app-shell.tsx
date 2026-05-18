@@ -18,9 +18,13 @@ import {
   BarChart3,
   Calendar,
   History,
-  TrendingUp
+  TrendingUp,
+  Sun,
+  Moon,
+  Monitor
 } from "lucide-react"
 import { useAuth } from "@/hooks/use-auth"
+import { useTheme } from "@/components/theme-provider"
 import { Button } from "@/components/ui/button"
 import {
   Sidebar,
@@ -50,6 +54,7 @@ import { usePathname, useRouter } from "next/navigation"
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, signOut } = useAuth();
+  const { setTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -161,16 +166,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56 glass border-white/10">
+              <DropdownMenuContent align="end" className="w-56 glass border-black/10 dark:border-white/10">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-white/10" />
-                <DropdownMenuItem asChild className="focus:bg-white/10 focus:text-primary cursor-pointer">
+                <DropdownMenuSeparator className="bg-black/10 dark:bg-white/10" />
+                <DropdownMenuItem asChild className="focus:bg-black/5 dark:focus:bg-white/10 focus:text-primary cursor-pointer">
                   <Link href="/settings" className="flex items-center gap-2">
                     <Settings className="w-4 h-4" />
                     Settings
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuSeparator className="bg-black/10 dark:bg-white/10" />
                 <DropdownMenuItem 
                   onClick={handleLogout} 
                   className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer"
@@ -187,14 +192,38 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <header className="h-16 flex items-center justify-between px-6 border-b border-white/5 glass sticky top-0 z-30">
             <div className="flex items-center gap-4">
               <SidebarTrigger className="text-muted-foreground" />
-              <div className="h-4 w-px bg-white/10 hidden sm:block" />
+              <div className="h-4 w-px bg-black/10 dark:bg-white/10 hidden sm:block" />
               <h1 className="text-sm font-bold hidden sm:block uppercase tracking-widest text-muted-foreground">
                 {pathname.replace('/', '').replace('-', ' ') || 'Dashboard'}
               </h1>
             </div>
             
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" className="text-muted-foreground relative hover:bg-white/5">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 relative">
+                    <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                    <span className="sr-only">Toggle theme</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="glass border-black/10 dark:border-white/10">
+                  <DropdownMenuItem onClick={() => setTheme("light")} className="focus:bg-black/5 dark:focus:bg-white/10 cursor-pointer">
+                    <Sun className="mr-2 h-4 w-4" />
+                    Light
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("dark")} className="focus:bg-black/5 dark:focus:bg-white/10 cursor-pointer">
+                    <Moon className="mr-2 h-4 w-4" />
+                    Dark
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("system")} className="focus:bg-black/5 dark:focus:bg-white/10 cursor-pointer">
+                    <Monitor className="mr-2 h-4 w-4" />
+                    System
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <Button variant="ghost" size="icon" className="text-muted-foreground relative hover:bg-black/5 dark:hover:bg-white/5">
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-2 right-2 w-2 h-2 bg-accent rounded-full border-2 border-background" />
               </Button>
