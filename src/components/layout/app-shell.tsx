@@ -62,6 +62,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     { title: "Team Management", icon: Users, href: "/team", roles: ["MANAGER", "ADMIN"] },
     { title: "Team Check-ins", icon: ClipboardCheck, href: "/team/checkin", roles: ["MANAGER", "ADMIN"] },
     { title: "Shared Quests", icon: Share2, href: "/admin/shared-goals", roles: ["ADMIN", "MANAGER"] },
+    { title: "Settings", icon: Settings, href: "/settings", roles: ["EMPLOYEE", "MANAGER", "ADMIN"] },
   ];
 
   const adminItems = [
