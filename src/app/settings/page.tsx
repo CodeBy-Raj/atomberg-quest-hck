@@ -6,12 +6,14 @@ import { AppShell } from "@/components/layout/app-shell"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Settings, User, Bell, Shield, Key } from "lucide-react"
+import { Settings, User, Bell, Shield, Key, Moon, Sun, Monitor } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useTheme } from "@/components/theme-provider"
 
 export default function SettingsPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -76,7 +78,7 @@ export default function SettingsPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button variant="outline" className="w-full border-white/10">Edit Profile</Button>
+              <Button variant="outline" className="w-full border-black/10 dark:border-white/10">Edit Profile</Button>
             </CardFooter>
           </Card>
 
@@ -100,13 +102,13 @@ export default function SettingsPage() {
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-sm font-bold">Push Notifications</p>
-                <div className="w-10 h-5 bg-white/10 rounded-full relative">
+                <div className="w-10 h-5 bg-black/10 dark:bg-white/10 rounded-full relative">
                   <div className="w-5 h-5 bg-muted-foreground rounded-full absolute left-0"></div>
                 </div>
               </div>
             </CardContent>
             <CardFooter>
-              <Button variant="outline" className="w-full border-white/10">Manage Notifications</Button>
+              <Button variant="outline" className="w-full border-black/10 dark:border-white/10">Manage Notifications</Button>
             </CardFooter>
           </Card>
 
@@ -127,7 +129,7 @@ export default function SettingsPage() {
                   <p className="text-sm font-bold">Two-Factor Authentication</p>
                   <p className="text-xs text-muted-foreground">Add an extra layer of security.</p>
                 </div>
-                <Button variant="outline" size="sm" className="border-white/10">Enable</Button>
+                <Button variant="outline" size="sm" className="border-black/10 dark:border-white/10">Enable</Button>
               </div>
             </CardContent>
           </Card>
@@ -144,9 +146,37 @@ export default function SettingsPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4 pt-4">
-              <div className="space-y-1">
+              <div className="space-y-3">
                 <p className="text-sm font-medium text-muted-foreground">Theme</p>
-                <p className="font-bold text-primary">Cyberpunk / Dark Glass (Active)</p>
+                <div className="flex gap-2">
+                  <Button 
+                    variant={theme === 'light' ? 'default' : 'outline'} 
+                    size="sm" 
+                    className={`flex-1 ${theme !== 'light' && 'border-black/10 dark:border-white/10'}`}
+                    onClick={() => setTheme('light')}
+                  >
+                    <Sun className="w-4 h-4 mr-2" />
+                    Light
+                  </Button>
+                  <Button 
+                    variant={theme === 'dark' ? 'default' : 'outline'} 
+                    size="sm" 
+                    className={`flex-1 ${theme !== 'dark' && 'border-black/10 dark:border-white/10'}`}
+                    onClick={() => setTheme('dark')}
+                  >
+                    <Moon className="w-4 h-4 mr-2" />
+                    Dark
+                  </Button>
+                  <Button 
+                    variant={theme === 'system' ? 'default' : 'outline'} 
+                    size="sm" 
+                    className={`flex-1 ${theme !== 'system' && 'border-black/10 dark:border-white/10'}`}
+                    onClick={() => setTheme('system')}
+                  >
+                    <Monitor className="w-4 h-4 mr-2" />
+                    System
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
